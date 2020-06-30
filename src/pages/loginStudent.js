@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-class Login extends Component {
+class LoginStudent extends Component {
   render() {
     return (
       <div className="container layout-login-centered-boxed"> 
@@ -46,9 +46,9 @@ class Login extends Component {
                 </div>
 
                 <form action="index.html" novalidate>
-                    <div className="row">
-                        <div className="col-md-6 col-sm-12">
-                                <div className="form-group">
+                   
+                    
+                <div className="form-group">
                                 <label className="text-label" for="schoolPin">School Activation Pin</label>
                                 <div className="input-group input-group-merge">
                                     <input id="schoolPin" type="text" required className="form-control form-control-prepended" placeholder="101010" />
@@ -58,53 +58,7 @@ class Login extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-sm-12">
-                            <div className="form-group">
-                            <label className="text-label" for="email_2">Full Name</label>
-                            <div className="input-group input-group-merge">
-                                <input id="email_2" type="email" required="" className="form-control form-control-prepended" placeholder="john@doe.com" />
-                                <div className="input-group-prepend">
-                                    <div className="input-group-text">
-                                        <span className="far fa-user-circle"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="row">
-
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="text-label" for="admissionNumber">Admission Number</label>
-                                <div className="input-group input-group-merge">
-                                    <input id="admissionNumber" type="text" required="" className="form-control form-control-prepended" placeholder="20200002" />
-                                    <div className="input-group-prepend">
-                                        <div className="input-group-text">
-                                            <span className="fas fa-graduation-cap"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-sm-12">
-                            <div className="form-group">
-                                <label className="text-label" for="phoneNumber">Phone Number</label>
-                                <div className="input-group input-group-merge">
-                                    <input id="phoneNumber" type="text" required="" className="form-control form-control-prepended" placeholder="John Obi" />
-                                    <div className="input-group-prepend">
-                                        <div className="input-group-text">
-                                            <span className="far fa-envelope"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
+                </div>
                     
                     
                     <div className="form-group">
@@ -119,12 +73,12 @@ class Login extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="text-label" for="password">Password:</label>
+                        <label className="text-label" for="phoneNumber">Phone Number:</label>
                         <div className="input-group input-group-merge">
-                            <input id="password" type="password" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
+                            <input id="phoneNumber" type="text" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <span className="fa fa-key"></span>
+                                    <span className="fas fa-phone-square-alt"></span>
                                 </div>
                             </div>
                         </div>
@@ -132,19 +86,15 @@ class Login extends Component {
                     <div className="form-group mb-1">
                         <button className="btn btn-block btn-primary" type="submit">Login</button>
                     </div>
-                    <div className="form-group text-center">
+                    {/* <div className="form-group text-center">
                         <div className="custom-control custom-checkbox">
                             <input type="checkbox" className="custom-control-input" checked="" id="remember" />
                             <label className="custom-control-label" for="remember">Remember me for 30 days</label>
                         </div>
-                    </div>
-                    <div className="form-group text-center">
-                            Are you a returning student? 
-                            <Link className="text-underline" to="#"> Login</Link>
-                    </div>
-                    <div className="form-group text-center mt-2">
-                        {/* <Link to="#">Forgot password?</Link> <br/> */}
-                        Are you a Teacher? <Link className="text-underline" to="#">Login</Link>
+                    </div> */}
+                    <div className="form-group text-center mt-4">
+                            Don't Have an Account? 
+                            <Link className="text-underline" to="/register"> Register</Link>
                     </div>
                 </form>
             </div>
@@ -154,4 +104,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LoginStudent;

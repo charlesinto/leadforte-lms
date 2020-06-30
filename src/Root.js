@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Switch } from "react-router-dom";
 
-import Login from "./pages/login";
+import Register from "./pages/register";
 import AuthRoute from "./components/AuthRoute";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import LoginStudent from "./pages/loginStudent";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/home";
 import { connect } from "react-redux";
 // import AdminRoute from "./components/AdminRoute";
 // import DashBoard from './hoc/Dashboard';
@@ -13,10 +15,22 @@ class Root extends Component {
   render() {
     return (
       <Switch>
+        <ProtectedRoute 
+            exact
+            path="/"
+            component={Home}
+            authenticated={this.props.isAuthenticated}
+        />
         <AuthRoute
           exact
-          path="/login"
-          component={Login}
+          path="/register"
+          component={Register}
+          authenticated={this.props.isAuthenticated}
+        />
+        <AuthRoute
+          exact
+          path="/student/login"
+          component={LoginStudent}
           authenticated={this.props.isAuthenticated}
         />
         {/* <AuthRoute
