@@ -9,6 +9,8 @@
     "axios": "^0.19.2",
     "firebase": "^7.15.5",
     "firebase-admin": "^8.13.0",
+    "google-gax": "1.13.0",
+    "http2": "^3.3.7",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
