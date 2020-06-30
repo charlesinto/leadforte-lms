@@ -45,11 +45,11 @@ class LoginStudent extends Component {
                     <div className="page-separator__text">or</div>
                 </div>
 
-                <form action="index.html" novalidate>
+                <form  noValidate>
                    
                     
                 <div className="form-group">
-                                <label className="text-label" for="schoolPin">School Activation Pin</label>
+                                <label className="text-label" htmlFor="schoolPin">School Activation Pin</label>
                                 <div className="input-group input-group-merge">
                                     <input id="schoolPin" type="text" required className="form-control form-control-prepended" placeholder="101010" />
                                     <div className="input-group-prepend">
@@ -62,7 +62,7 @@ class LoginStudent extends Component {
                     
                     
                     <div className="form-group">
-                        <label className="text-label" for="email">Email Address:</label>
+                        <label className="text-label" htmlFor="email">Email Address:</label>
                         <div className="input-group input-group-merge">
                             <input id="email" type="email" required="" className="form-control form-control-prepended" placeholder="john@doe.com" />
                             <div className="input-group-prepend">
@@ -73,7 +73,7 @@ class LoginStudent extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="text-label" for="phoneNumber">Phone Number:</label>
+                        <label className="text-label" htmlFor="phoneNumber">Phone Number:</label>
                         <div className="input-group input-group-merge">
                             <input id="phoneNumber" type="text" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
                             <div className="input-group-prepend">
