@@ -2,13 +2,14 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router,} from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
 import Root from "./Root";
 // import Loader from './components/Loader';
 import { connect } from 'react-redux';
 import Layout from './hoc/layout';
 import * as actions from "./redux/actions";
+import { auth } from "./database";
 
 class AppRoot extends Component {
     INITIAL_STATE = {authenticated: false};
@@ -17,27 +18,31 @@ class AppRoot extends Component {
     this.state = {...this.INITIAL_STATE}
   }
   componentDidMount(){
+    this.authListener()
   }
 
-  checkAuthStatus = async () => {
-    const token = localStorage.getItem('x-access-token')
-    const user = localStorage.getItem('ipf-user');
-    if(!user || !token){
-      this.props.setAuthStatus(false);
-      return this.setState({authenticated: false})
-      // return window.location.href = '/login';
-      
-    }
-    const decodedToken = jwtDecode(token)
-  
-    if(decodedToken.exp * 1000 < Date.now()){
-      this.props.setAuthStatus(false);
-      this.setState({authenticated: false})
-      // return window.location.href = '/login';
+  authListener() {
+    const user = auth().currentUser;
+    if(user){
+      this.setState({
+        authenticated: true
+      })
     }else{
-      this.props.setAuthStatus(true);
-      this.setState({authenticated: true})
+      this.setState({
+        authenticated: false
+      })
     }
+    auth().onAuthStateChanged(user => {
+      if(user){
+        this.setState({
+          authenticated: true
+        })
+      }else{
+        this.setState({
+          authenticated: false
+        })
+      }
+    })
   }
   render() {
     return (
