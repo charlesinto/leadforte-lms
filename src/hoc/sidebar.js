@@ -2,16 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { auth } from '../database';
+import { withRouter } from "react-router-dom";
 
 class SideBar extends Component {
 
 renderUserName = () => {
     const user = JSON.parse(localStorage.getItem('easystudy-user'))
-        return user.fullName
+        return user ? user.fullName : this.logOut();
 }
 renderUserType = () => {
     const user = JSON.parse(localStorage.getItem('easystudy-user'))
-    return user.type
+    return user.type ? user.type: this.logOut()
+}
+logOut = () => {
+    auth().signOut()
+    this.props.history.push('/register')
+}
+renderUserAvatar = () => {
+    const user = JSON.parse(localStorage.getItem('easystudy-user'))
+        return user ? user.fullName[0] : this.logOut();
 }
   render() {
     return (
@@ -24,7 +33,7 @@ renderUserType = () => {
                     <div className="d-flex align-items-center sidebar-p-a border-bottom bg-light">
                         <Link to="#" className="flex d-flex align-items-center text-body text-underline-0">
                             <span className="avatar avatar-sm mr-2">
-    <span className="avatar-title rounded-circle bg-soft-secondary text-muted">{this.renderUserName()[0].toUpperCase()}</span>
+    <span className="avatar-title rounded-circle bg-soft-secondary text-muted">{this.renderUserAvatar()}</span>
                             </span>
                             <span className="flex d-flex flex-column">
     <strong>{this.renderUserName()}</strong>
@@ -487,4 +496,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(SideBar);
+export default withRouter(connect(mapStateToProps, null)(SideBar)); 

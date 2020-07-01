@@ -23,6 +23,9 @@ class Login extends Component {
             if(schoolPin.trim() === '' || fullName.trim() === '' || phoneNumber.trim() === '' || email.trim() === '' || admissionNumber.trim() === ''){
                 return swal.fire('Please note that all fields are required')
             }
+            if(fullName.split(' ').length !== 2){
+                 return swal.fire('First and last Name is required for full name')
+             }
             //verify school pin
             this.props.initiateLoading(true)
             const docs = await db.doc(`/partners/${schoolPin}`).get();
@@ -44,6 +47,15 @@ class Login extends Component {
                  this.props.initiateLoading(false)
                  return swal.fire('No Student Accout found with the admission number, please contact admin');
              }
+             
+             localStorage.setItem('easystudy-user', JSON.stringify({
+                schoolCode: schoolPin,
+                email,
+                fullName,
+                phoneNumber,
+                type: 'student',
+                admissionNumber
+            }))
      
              //create account for student
             const user = await auth().createUserWithEmailAndPassword(email, phoneNumber)
@@ -60,15 +72,7 @@ class Login extends Component {
 
             })
 
-            localStorage.setItem('easystudy-user', JSON.stringify({
-                schoolCode: schoolPin,
-                email,
-                fullName,
-                phoneNumber,
-                type: 'student',
-                uid: user.user.uid,
-                admissionNumber
-            }))
+            
 
             this.props.initiateLoading(false)
             this.props.history.push('/')

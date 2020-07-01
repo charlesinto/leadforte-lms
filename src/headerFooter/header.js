@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from "../database";
 
 class Header extends Component {
     renderUserName = () => {
         const user = JSON.parse(localStorage.getItem('easystudy-user'))
-        return user.fullName
+        return user.fullName ? user.fullName : ''
     }
     renderUserType = () => {
         const user = JSON.parse(localStorage.getItem('easystudy-user'))
-        return user.type
+        return user.type ? user.type: this.logOut()
+    }
+    logOut = () => {
+        auth().signOut()
+        this.props.history.push('/register')
     }
   render() {
     return (
