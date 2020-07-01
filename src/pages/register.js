@@ -2,11 +2,87 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../redux/actions";
+import swal from "sweetalert2";
+import { db, auth } from "../database";
+import axios from "axios";
 
 class Login extends Component {
-    registerStudent = (e) => {
-        e.preventDefault()
-        // this.props.initiateLoading(true)
+    state = {
+        schoolPin: '', fullName: '', phoneNumber: '', email: '', admissionNumber: ''
+    }
+    handleOnChange = (e) => {
+        const {target: {name, value}} = e;
+        this.setState({
+            [name]: value
+        })
+    }
+    registerStudent = async (e) => {
+        try{
+            e.preventDefault()
+            const {schoolPin, fullName, phoneNumber, email, admissionNumber} = this.state;
+            if(schoolPin.trim() === '' || fullName.trim() === '' || phoneNumber.trim() === '' || email.trim() === '' || admissionNumber.trim() === ''){
+                return swal.fire('Please note that all fields are required')
+            }
+            //verify school pin
+            this.props.initiateLoading(true)
+            const docs = await db.doc(`/partners/${schoolPin}`).get();
+           
+            if(!docs.exists){
+                 this.props.initiateLoading(false)
+                return swal.fire('Invalid School Activation Pin, please contact admin')
+            }
+            const appDomain = docs.data()['appDomain'];
+            localStorage.setItem('appDomain', appDomain);
+            localStorage.setItem('schoolCode', schoolPin);
+            axios.defaults.baseURL = appDomain;
+             // this.props.initiateLoading(true)
+     
+             //verify student class
+     
+             const students = await db.collection('students').where('schoolCode', '==', schoolPin).where('admissionNumber', '==', admissionNumber).get()
+             if(students.empty){
+                 this.props.initiateLoading(false)
+                 return swal.fire('No Student Accout found with the admission number, please contact admin');
+             }
+     
+             //create account for student
+            const user = await auth().createUserWithEmailAndPassword(email, phoneNumber)
+            
+            await db.collection(`users/${schoolPin}/activated users`).add({
+                admissionNumber,
+                firstName: fullName.split(' ')[0],
+                lastName: fullName.split(' ')[1],
+                schoolCode: schoolPin,
+                phoneNumber,
+                email,
+                type: 'student',
+                uid: user.user.uid
+
+            })
+
+            localStorage.setItem('easystudy-user', JSON.stringify({
+                schoolCode: schoolPin,
+                email,
+                fullName,
+                phoneNumber,
+                type: 'student',
+                uid: user.user.uid,
+                admissionNumber
+            }))
+
+            this.props.initiateLoading(false)
+            this.props.history.push('/')
+        }catch(error){
+            console.log(error)
+            this.props.initiateLoading(false)
+            if(error.code === 'auth/invalid-email'){
+                return swal.fire('Invalid Email Address')
+            }
+            if(error.code === 'auth/weak-password'){
+                return swal.fire('Phone Number is less than 11 characters')
+            }
+            return swal.fire('Some errors were encountered, please try again')
+        }
     }
   render() {
     return (
@@ -51,13 +127,13 @@ class Login extends Component {
                     <div className="page-separator__text">or</div>
                 </div>
 
-                <form action="index.html" noValidate>
+                <form   >
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
                                 <div className="form-group">
                                 <label className="text-label" htmlFor="schoolPin">School Activation Pin</label>
                                 <div className="input-group input-group-merge">
-                                    <input id="schoolPin" type="text" required className="form-control form-control-prepended" placeholder="101010" />
+                                    <input onChange={this.handleOnChange} value={this.state.schoolPin} id="schoolPin" name="schoolPin" type="text" required className="form-control form-control-prepended" placeholder="101010" />
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fa fa-key"></span>
@@ -70,7 +146,7 @@ class Login extends Component {
                             <div className="form-group">
                             <label className="text-label" htmlFor="fullName">Full Name</label>
                             <div className="input-group input-group-merge">
-                                <input id="fullName" type="email" required="" className="form-control form-control-prepended" placeholder="John Obi" />
+                                <input onChange={this.handleOnChange} value={this.state.fullName} id="fullName" name="fullName" type="text" required className="form-control form-control-prepended" placeholder="John Obi" />
                                 <div className="input-group-prepend">
                                     <div className="input-group-text">
                                         <span className="far fa-user-circle"></span>
@@ -86,7 +162,7 @@ class Login extends Component {
                             <div className="form-group">
                                 <label className="text-label" htmlFor="admissionNumber">Admission Number</label>
                                 <div className="input-group input-group-merge">
-                                    <input id="admissionNumber" type="text" required="" className="form-control form-control-prepended" placeholder="20200002" />
+                                    <input onChange={this.handleOnChange} value={this.state.admissionNumber} id="admissionNumber" name="admissionNumber" type="text" required className="form-control form-control-prepended" placeholder="20200002" />
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-graduation-cap"></span>
@@ -99,7 +175,7 @@ class Login extends Component {
                             <div className="form-group">
                                 <label className="text-label" htmlFor="phoneNumber">Phone Number:</label>
                                 <div className="input-group input-group-merge">
-                                    <input id="phoneNumber" type="text" required="" className="form-control form-control-prepended" placeholder="08041941940" />
+                                    <input onChange={this.handleOnChange} value={this.state.phoneNumber} id="phoneNumber" name="phoneNumber" type="text" required className="form-control form-control-prepended" placeholder="08041941940" />
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-phone-square-alt"></span>
@@ -116,7 +192,7 @@ class Login extends Component {
                     <div className="form-group">
                         <label className="text-label" htmlFor="email">Email Address:</label>
                         <div className="input-group input-group-merge">
-                            <input id="email" type="email" required="" className="form-control form-control-prepended" placeholder="john@doe.com" />
+                            <input onChange={this.handleOnChange} value={this.state.email} id="email" type="email" name="email" required className="form-control form-control-prepended" placeholder="john@doe.com" />
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
                                     <span className="far fa-envelope"></span>
@@ -124,7 +200,7 @@ class Login extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label className="text-label" htmlFor="password">Password:</label>
                         <div className="input-group input-group-merge">
                             <input id="password" type="password" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
@@ -134,7 +210,7 @@ class Login extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="form-group mb-1">
                         <button onClick={this.registerStudent} className="btn btn-block btn-primary" type="submit">Register</button>
                     </div>

@@ -22,3 +22,46 @@ body{
 
 .loading-wrapper img {
 }
+
+input:invalid {
+  border: 2px dashed red;
+}
+
+input:valid {
+  border: 2px solid #50B767;
+}
+
+.app-header{
+
+}
+
+.app-container{
+ padding: 60px 0;
+}
+
+.app-wrapper{
+
+}
+
+.app-sidebar{
+
+}
+
+[dir=ltr] .mdk-header-layout{
+  position: fixed !important;
+  z-index: 100 !important;
+}
+
+[dir=ltr] .mdk-drawer__content{
+  top: 60px !important
+}
+
+@media screen and (max-width: 768px){
+  #default-drawer{
+    display: none;
+  }
+}
+
+.sidebar.sidebar-light.sidebar-left{
+  overflow-y: auto !important;
+}
