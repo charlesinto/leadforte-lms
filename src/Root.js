@@ -20,6 +20,11 @@ import Profile from "./pages/profile";
 import Assessments from "./pages/assessments";
 import AssessmentDetail from './pages/assessmentDetail'
 import Quiz from "./pages/quiz";
+import TeacherClasses from "./pages/teacherClasses";
+import TeacherChatroom from "./pages/teacherChatroom";
+import TeacherAnnouncement from "./pages/teacherAnnouncement";
+import TeacherAssessment from "./pages/teacherViewAnnoucements";
+
 // import AdminRoute from "./components/AdminRoute";
 // import DashBoard from './hoc/Dashboard';
 // import Layout from './hoc/layout';
@@ -60,7 +65,7 @@ class Root extends Component {
         />
         <ProtectedRoute
           exact
-           path="/student/audit-course/:id"
+           path="/student/audit-course/view-resources"
            component={AuditCourse}
            authenticated={this.props.isAuthenticated}
         />
@@ -69,6 +74,12 @@ class Root extends Component {
             path="/app/classroom"
             component={Classroom}
             authenticated={this.props.isAuthenticated}
+        />
+        <ProtectedRoute
+            exact
+            path="/instructor/view-assessments"
+            authenticated={this.props.isAuthenticated}
+            component={TeacherAssessment}
         />
         <ProtectedRoute
           exact
@@ -92,7 +103,7 @@ class Root extends Component {
 
         />
         
-        <ProtectedRoute
+        <AuthRoute
             exact
             path="/teacher/login"
             component={TeacherLogin}
@@ -115,6 +126,26 @@ class Root extends Component {
           path="/student/login"
           component={LoginStudent}
           authenticated={this.props.isAuthenticated}
+        />
+        <ProtectedRoute 
+          exact
+          path="/instructor/classroom"
+          component={TeacherClasses}
+          authenticated={this.props.isAuthenticated}
+
+        />
+        <ProtectedRoute
+          exact
+          path="/instructor/chatroom"
+          component={TeacherChatroom}
+
+        />
+        <ProtectedRoute
+          exact
+          path="/instructor/view-annoucements"
+          component={TeacherAnnouncement}
+          authenticated={this.props.isAuthenticated}
+
         />
         {/* <AuthRoute
           exact

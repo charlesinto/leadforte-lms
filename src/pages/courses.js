@@ -365,9 +365,15 @@ class StudentCourses extends Component {
       this.props.initiateLoading(true)
       const appDomain = localStorage.getItem('appDomain')
       const primarySchool = await axios.get(appDomain+'read.php?id=2')
-      console.log(primarySchool.data)
+      console.log(primarySchool.data.subjects)
       const juniorSchool = await axios.get(appDomain +'read.php?id=3')
       const seniorschool = await axios.get(appDomain +'read.php?id=4')
+      this.setState({
+        primary: primarySchool.data.subjects,
+        junior: juniorSchool.data.subjects,
+        senior: seniorschool.data.subjects
+      })
+      this.props.initiateLoading(false)
     }catch(error){
       console.log(error.response)
       this.props.initiateLoading(false)
@@ -404,6 +410,21 @@ class StudentCourses extends Component {
           return ;
       }
     })
+  }
+  onSelect = async (id) => {
+    try{
+      this.props.initiateLoading(true)
+        const appDomain = localStorage.getItem('appDomain')
+        const response = await axios.get(appDomain +`materials.php?id=${id}`)
+        console.log(response)
+        const materials = response.data.materials;
+        this.props.materialsView(materials)
+        this.props.history.push(`/student/audit-course/view-resources`)
+        this.props.initiateLoading(false)
+    }catch(error){
+      this.props.initiateLoading(false)
+      console.error(error)
+    }
   }
   render() {
     return (
@@ -442,7 +463,7 @@ class StudentCourses extends Component {
                       <div className="row">
                           {
                             this.state.subject.map(subject => {
-                              return <Course title={subject.subject} id={subject.id} />
+                              return <Course title={subject.subject} onSelect={this.onSelect} id={subject.id} />
                             })
                           }
                       </div>

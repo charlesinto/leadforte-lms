@@ -58,6 +58,10 @@ class Quiz extends Component{
                     const totalValidMarks = this.props.assessment.totalValidMarks;
                     const totalNumberOfQuestions = this.props.assessment.questions.length
                     const schoolCode = JSON.parse(localStorage.getItem('easystudy-user'))['schoolCode']; 
+                    const admissionNumber = JSON.parse(localStorage.getItem('easystudy-user'))['admissionNumber']; 
+                    const userClassDoc = await db.collection('students').where('schoolCode', '==', schoolCode).where('admissionNumber', '==', admissionNumber).get()
+                    const userClass = userClassDoc.docs[0].data()['class'];
+
                     this.state.response.forEach(item => {
                         if(item.userAnswer === item.question.correctionOption){
                             totalMarksObtained = totalMarksObtained + parseInt(item.question.questionMark)
@@ -67,10 +71,11 @@ class Quiz extends Component{
                             correctionOption: item.question.correctionOption,
                             selectedOption: item.userAnswer,
                             question: {...item.question},
-                            questionNumber: item.index
+                            questionNumber: item.index,
+                            
                         })
                     })
-
+                    const fullName = JSON.parse(localStorage.getItem('easystudy-user'))['fullName'];
                     await db.collection(`/studentResponse/${schoolCode}/test`).add({
                         response: data,
                         numberOfCorrectAnswers,
@@ -79,7 +84,13 @@ class Quiz extends Component{
                         totalNumberOfQuestions,
                         assessmentId,
                         completedAt,
-                        studentUserId
+                        studentUserId,
+                        studentFullName: fullName,
+                        studentClass: userClass,
+                        quizName: this.props.assessment.quizName,
+                        subject: this.props.assessment.subject,
+                        validUntil: this.props.assessment.validUntil,
+                        
                     })
                     this.props.initiateLoading(false)
                     swal.fire(

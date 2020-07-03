@@ -135,8 +135,27 @@ class AssessmentDetail extends Component{
                                     <td>{this.props.assessment.numberOfQuestions}</td>
                                     </tr>
                                     <tr>
+                                    {/* <th scope="row">2</th> */}
+                                    <td>Is Timed?</td>
+                                    <td>{this.props.assessment.isTimed ? 'True' : 'false' }</td>
+                                    </tr>
+                                    <tr>
+                                    {/* <th scope="row">2</th> */}
+                                    <td>Expected Time To Complete</td>
+                                    <td>{this.props.assessment.numberOfMinutesToComplete} mins</td>
+                                    </tr>
+                                    <tr>
+                                    {/* <th scope="row">2</th> */}
+                                    <td>Valid Until</td>
+                                    <td>{this.props.assessment.validUntil}</td>
+                                    </tr>
+                                    <tr>
                                     <td>Total Valid Mark</td>
                                     <td>{this.props.assessment.totalValidMarks}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Submission Status</td>
+                                    <td>{this.state.report ? 'Submitted': 'Pending'}</td>
                                     </tr>
                                 </tbody>
                                 </table>

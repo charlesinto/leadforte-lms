@@ -22,7 +22,6 @@ class Assessments extends Component{
             .onSnapshot(docs => {
                 if(!docs.empty){
                     const userClass = docs.docs[0].data()['class']
-                    console.log(userClass)
                     db.collection('assessments').where('schoolCode', '==', schoolCode)
                     .where('studentClass', '==', userClass).onSnapshot(this.onDocmentSnapshot)
                 }

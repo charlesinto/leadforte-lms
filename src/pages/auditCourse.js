@@ -57,10 +57,14 @@ class AuditCourse extends Component {
       console.log(primarySchool.data)
       const juniorSchool = await axios.get(appDomain +'read.php?id=3')
       const seniorschool = await axios.get(appDomain +'read.php?id=4')
+      this.props.initiateLoading(false)
     }catch(error){
       console.log(error.response)
       this.props.initiateLoading(false)
     }
+  }
+  static getDerivedStateFromProps(nextProps, state){
+    return {...state, materials: nextProps.materials}
   }
   handleOnChange = (e) => {
     const {target: {name, value}} = e;
@@ -98,28 +102,44 @@ class AuditCourse extends Component {
     switch(material.file_type){
       case 'pdf':
         console.log('val pdf')
+        this.props.initiateLoading(true)
+        setTimeout(() => {
+          this.props.initiateLoading(false)
+        }, 15000)
       return ( <object data={material.file_url} type="application/pdf">
-          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'doc':
-        console.log('val pdf')
-      return ( <object data={material.file_url} type="application/pdf">
-          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+        this.props.initiateLoading(true)
+        setTimeout(() => {
+          this.props.initiateLoading(false)
+        }, 15000)
+      return ( <object data={material.file_url}>
+          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'ppt':
-        console.log('val pdf')
-      return ( <object data={material.file_url} type="application/pdf">
-          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+        this.props.initiateLoading(true)
+        setTimeout(() => {
+          this.props.initiateLoading(false)
+        }, 15000)
+      return ( <object data={material.file_url} >
+          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'video':
-        console.log('val video')
+        this.props.initiateLoading(true)
+        setTimeout(() => {
+          this.props.initiateLoading(false)
+        }, 15000)
         return ( <object data={material.file_url}>
-        <iframe class="embed-responsive-item" title="vidoe" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+        <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="vidoe" allowFullScreen src={material.file_url}></iframe>
     </object>)
       case 'audio':
-        console.log('val audio')
+        this.props.initiateLoading(true)
+        setTimeout(() => {
+          this.props.initiateLoading(false)
+        }, 150000)
       return ( <object data={material.file_url}>
-      <iframe class="embed-responsive-item" title="audo" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+      <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="audo" allowFullScreen src={material.file_url}></iframe>
   </object>)
       default:
         return (
@@ -147,7 +167,7 @@ class AuditCourse extends Component {
                                 <div class="card clear-shadow border">
                                     <div class="card-body ">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <strong>{this.state.materials[0].file_name}</strong>
+                                            <strong>{this.state.materials[0] ? this.state.materials[0].file_name: ''}</strong>
                                             {/* <small class="text-muted">3h 50min</small> */}
                                         </div>
                                         <div>
@@ -233,4 +253,9 @@ class AuditCourse extends Component {
   }
 }
 
-export default connect(null, actions)(AuditCourse);
+const mapStateToProps = state => {
+  const {UI: {materials}} = state;
+  return {materials}
+}
+
+export default connect(mapStateToProps, actions)(AuditCourse);

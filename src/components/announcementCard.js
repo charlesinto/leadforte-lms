@@ -8,7 +8,7 @@ class Annoucement extends Component {
     }
   render() {
     return (
-        <div key={this.props.id}  style={{cursor:'pointer'}} onClick={(e) => this.goToCourseDetail(e, this.props.id)} className="col-lg-3 col-md-4 card-group-row__col" key={this.props.id}>
+        <div key={this.props.id}  style={{cursor:'pointer'}} onClick={(e) => this.goToCourseDetail(e, this.props.id)} className="col-lg-4 col-md-4 card-group-row__col" key={this.props.id}>
         <div className="card card-group-row__card ">
             <div className="card-body d-flex">
                 <div className="avatar mx-2">
@@ -27,7 +27,7 @@ class Annoucement extends Component {
                             <strong>{this.props.title}</strong>
                         </Link>
                         <span className="mt-1 badge badge-pill badge-soft-primary">
-                            {this.props.target.toUpperCase()}
+                            {this.props.target ? this.props.target.toUpperCase() : null}
                         </span>
                     </div>
                     <div className="">

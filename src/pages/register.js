@@ -235,7 +235,7 @@ class Login extends Component {
                     </div>
                     <div className="form-group text-center mt-2">
                         {/* <Link to="#">Forgot password?</Link> <br/> */}
-                        Are you a Teacher? <Link className="text-underline" to="/teacher/login">Login</Link>
+                        Are you a Teacher? <Link  to="/teacher/login">Login</Link>
                     </div>
                 </form>
             </div>

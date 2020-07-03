@@ -19,18 +19,20 @@ class TeacherLogin extends Component {
                 return swal.fire('Email Address and Phone number is required')
             }
             const docs = await db.collection(`teachers`).where('email', '==', email).get()
-
+            console.log(email)
             if(docs.empty){
-                return swal.fire('Some errors were encountered signing you in, please contact your admin')
+                this.props.initiateLoading(false)
+                return swal.fire('Your account has not been provisioned, please contact your admin')
             }
 
             const user = await auth().signInWithEmailAndPassword(email, phoneNumber);
             const uid = user.user.uid;
 
             const schoolPin = docs.docs[0].data()['partnerCode'];
+            console.log('schoolPin', schoolPin)
             const docs2 = await db.doc(`/partners/${schoolPin}`).get();
            
-            if(!docs.exists){
+            if(!docs2.exists){
                  this.props.initiateLoading(false)
                 return swal.fire('Sorry School not recognized, please contact admin')
             }
@@ -142,10 +144,10 @@ class TeacherLogin extends Component {
                   <div className="form-group">
                       <label className="text-label" htmlFor="phoneNumber">Password:</label>
                       <div className="input-group input-group-merge">
-                          <input id="phoneNumber" name="phoneNumber" onChange={this.handleOnChange} value={this.state.phoneNumber} type="text" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
+                          <input id="phoneNumber" name="phoneNumber" onChange={this.handleOnChange} value={this.state.phoneNumber} type="password" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
                           <div className="input-group-prepend">
                               <div className="input-group-text">
-                                  <span className="fas fa-phone-square-alt"></span>
+                                <span className="fa fa-key"></span>
                               </div>
                           </div>
                       </div>

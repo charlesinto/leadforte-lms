@@ -3,8 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import book from "../assets/book.png";
 
 class Course extends Component {
-    goToCourseDetail = (e) => {
-        this.props.history.push(`/student/audit-course/${this.props.id}`)
+    goToCourseDetail = (e, id) => {
+        // this.props.history.push(`/student/audit-course/${this.props.id}`)
+        this.props.onSelect(id)
     }
     render(){
         return (

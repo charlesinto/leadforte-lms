@@ -27,7 +27,7 @@ class Assessments extends Component {
                             <strong>{this.props.subject}</strong>
                         </Link>
                         <span className="mt-1 badge badge-pill badge-soft-primary">
-                            {this.props.validUntil}
+                           Due Date: {this.props.validUntil}
                         </span>
                     </div>
                     <div className="">

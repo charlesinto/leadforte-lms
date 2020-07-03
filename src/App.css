@@ -49,7 +49,7 @@ input:valid {
 
 [dir=ltr] .mdk-header-layout{
   position: fixed !important;
-  z-index: 100 !important;
+  z-index: 10 !important;
 }
 
 [dir=ltr] .mdk-drawer__content{
@@ -212,4 +212,38 @@ activity-desc1 {
 
 #choice.border-success {
   border-color: #17b15c !important;
+}
+
+.fab-wrapper{
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  z-index: 90;
+}
+
+.fab-container{
+  width: 60px;
+  height:60px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #1377C9;
+  color: #fff;
+  
+}
+
+[dir=ltr] .modal{
+  top: 60px;
+}
+
+[dir=ltr] .modal-backdrop{
+  display: none !important;
+}
+
+.classBanner{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #EEEEEE;
+  padding: 16px 20px;
+  width: 100%
 }
