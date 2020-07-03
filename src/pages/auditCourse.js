@@ -94,6 +94,39 @@ class AuditCourse extends Component {
           material: material
       })
   }
+  showIframe = material => {
+    switch(material.file_type){
+      case 'pdf':
+        console.log('val pdf')
+      return ( <object data={material.file_url} type="application/pdf">
+          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+      </object>)
+      case 'doc':
+        console.log('val pdf')
+      return ( <object data={material.file_url} type="application/pdf">
+          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+      </object>)
+      case 'ppt':
+        console.log('val pdf')
+      return ( <object data={material.file_url} type="application/pdf">
+          <iframe class="embed-responsive-item" title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+      </object>)
+      case 'video':
+        console.log('val video')
+        return ( <object data={material.file_url}>
+        <iframe class="embed-responsive-item" title="vidoe" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+    </object>)
+      case 'audio':
+        console.log('val audio')
+      return ( <object data={material.file_url}>
+      <iframe class="embed-responsive-item" title="audo" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+  </object>)
+      default:
+        return (
+          <iframe title="video" class="embed-responsive-item" src={"https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"} allowfullscreen></iframe>
+        )
+    }
+  }
   render() {
     return (
       <Dashboard>
@@ -119,11 +152,11 @@ class AuditCourse extends Component {
                                         </div>
                                         <div>
                                             <span class="mr-2">
-                                                <a href="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></a>
-                                                <a href="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></a>
-                                                <a href="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></a>
-                                                <a href="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></a>
-                                                <a href="#" class="rating-link active"><i class="material-icons icon-16pt">star_half</i></a>
+                                                <Link to="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></Link>
+                                                <Link to="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></Link>
+                                                <Link to="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></Link>
+                                                <Link to="#" class="rating-link active"><i class="material-icons icon-16pt">star</i></Link>
+                                                <Link to="#" class="rating-link active"><i class="material-icons icon-16pt">star_half</i></Link>
                                             </span>
                                             {/* <small class="text-muted">(391 ratings)</small> */}
                                         </div>
@@ -161,20 +194,18 @@ class AuditCourse extends Component {
                             <div class="col-md-8">
 
                                 <div class="embed-responsive embed-responsive-16by9 mb-4" style={{maxHeight: 400, background: '#0000'}}>
-                                    
                                     {/* {
-                                        
-                                        this.state.material.file_url && this.state.material.file_type === 'video' ?
-                                        <ReactPlayer controls playing light url={this.state.material.file_url} /> : null
-                                    }
-                                    {
-                                        console.log(this.state.material)
+                                      console.log(this.state.material)
                                     } */}
                                     {
-                                        
-                                        
-                                          <iframe title="video" class="embed-responsive-item" src={ this.state.material.file_type ? this.state.material.file_url : "https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"} allowfullscreen=""></iframe>
+                                      this.showIframe(this.state.material)
                                     }
+                                    {/* {
+                                        this.state.material.file_type ?
+                                          null 
+                                          <iframe title="video" class="embed-responsive-item" src={ "https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"} allowfullscreen></iframe>
+
+                                    } */}
                                    
                                 </div>
 

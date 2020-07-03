@@ -28,6 +28,11 @@ class Login extends Component {
              }
             //verify school pin
             this.props.initiateLoading(true)
+            const users = await db.collection(`users`).where('admissionNumber', '==', admissionNumber).get();
+            if(!users.empty){
+                this.props.initiateLoading(false)
+                return swal.fire('User account exists please proceed to login')
+            }
             const docs = await db.doc(`/partners/${schoolPin}`).get();
            
             if(!docs.exists){
@@ -60,7 +65,7 @@ class Login extends Component {
              //create account for student
             const user = await auth().createUserWithEmailAndPassword(email, phoneNumber)
             
-            await db.collection(`users/${schoolPin}/activated users`).add({
+            await db.collection(`users`).add({
                 admissionNumber,
                 firstName: fullName.split(' ')[0],
                 lastName: fullName.split(' ')[1],
@@ -230,7 +235,7 @@ class Login extends Component {
                     </div>
                     <div className="form-group text-center mt-2">
                         {/* <Link to="#">Forgot password?</Link> <br/> */}
-                        Are you a Teacher? <Link className="text-underline" to="#">Login</Link>
+                        Are you a Teacher? <Link className="text-underline" to="/teacher/login">Login</Link>
                     </div>
                 </form>
             </div>

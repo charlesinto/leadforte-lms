@@ -65,3 +65,151 @@ input:valid {
 .sidebar.sidebar-light.sidebar-left{
   overflow-y: auto !important;
 }
+
+.activity-row{
+  margin-bottom: 1em;
+  padding-bottom: 1.02em;
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+  padding-top: 50px;
+}
+
+.activity-img img{
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.activity-img{
+  padding-right: 20px;
+}
+
+.activity-img span{
+  display: block;
+    font-size: 12px;
+    margin: .5em 0 0;
+    color: #999;
+}
+
+.activity-img1{
+  padding: 0 !important;
+  width: 50%;
+}
+
+.row1{
+  border-bottom: none !important
+}
+
+.activity-row, .activity-row1{
+  text-align: left;
+}
+
+.activity-desc-sub,.activity-desc-sub2, .activity-desc-sub1{
+  padding: .7em;
+    background: #eee;
+    position: relative;
+}
+
+.activity-desc-sub2:before{
+  left: 100% !important;
+  transform: rotate(180deg) !important;
+}
+
+.activity-desc-sub:before{
+  left: -3%;
+}
+
+.activity-desc-sub2:before, .activity-desc-sub:before{
+  
+  top: 20%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(213, 242, 239, 0);
+    border-right-color: #E7E7E7;
+    border-width: 8px;
+    margin-top: -5px;
+}
+
+/* @media (max-width: 1440px){
+.activity-desc-sub:before {
+  left: -10% !important;
+}
+} */
+
+.chat-body{
+  height: calc(100vh - 60px);
+}
+
+@media screen and (max-width: 768px){
+  [dir=ltr] .mdk-header-layout__content{
+    padding-top: 120px;
+  }
+  .activity-desc-sub:before {
+    left: -10% !important;
+  }
+  .chat-body{
+    height: calc(100vh - 150px) !important;
+  }
+  .search-wrapper-text{
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+activity-desc1 {
+  padding: 0;
+}
+
+.search-wrapper-text{
+  background: #eee;
+  
+  position: fixed;
+  margin-left: 240px;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 240px);
+  padding: 30px 16px;
+
+}
+
+.chat-body{
+  height: calc(100vh - 150px);
+  overflow-y: scroll !important;
+}
+
+.search-wrapper-text input{
+  outline: none;
+    border: 1px solid #888888;
+    padding: 10px;
+    color: #333;
+    font-size: 13px;
+    width: 100%;
+    background: #fff;
+}
+
+.list-group-item{
+  cursor: pointer;
+}
+
+.rouded-avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.initials{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#choice.border-success {
+  border-color: #17b15c !important;
+}

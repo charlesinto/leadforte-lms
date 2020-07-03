@@ -12,7 +12,7 @@ renderUserName = () => {
 }
 renderUserType = () => {
     const user = JSON.parse(localStorage.getItem('easystudy-user'))
-    return user.type ? user.type: this.logOut()
+    return user && user.type ? user.type: this.logOut()
 }
 logOut = () => {
     auth().signOut()
@@ -43,11 +43,11 @@ renderUserAvatar = () => {
                         <div className="dropdown ml-auto">
                             <Link to="#" data-toggle="dropdown" data-caret="false" className="text-muted"><i className="material-icons">more_vert</i></Link>
                                 <div className="dropdown-menu dropdown-menu-right">
-                                    <a className="dropdown-item" href="student-dashboard.html">Dashboard</a>
-                                    <a className="dropdown-item" href="student-profile.html">My profile</a>
-                                    <a className="dropdown-item" href="student-edit-account.html">Edit account</a>
+                                    {/* <a className="dropdown-item" href="student-dashboard.html">Dashboard</a> */}
+                                    <Link className="dropdown-item" to="/student/profile">My profile</Link>
+                                    {/* <a className="dropdown-item" href="student-edit-account.html">Edit account</a> */}
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" rel="nofollow" data-method="delete" href="login.html">Logout</a>
+                                    {/* <a className="dropdown-item" rel="nofollow" data-method="delete" href="login.html">Logout</a> */}
                                 </div>
                         </div>
                     </div>
@@ -129,8 +129,8 @@ renderUserAvatar = () => {
     </a>
 </li> */}
 
-<li className="sidebar-menu-item">
-    <Link className="sidebar-menu-button" to="#classroom">
+<li  className={`sidebar-menu-item ${this.props.activeLink === 'classroom' ? 'active': ''} `}>
+    <Link to="/app/classroom" className="sidebar-menu-button">
         <span className="sidebar-menu-icon sidebar-menu-icon--left">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="22" height="22">
                 <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
@@ -138,7 +138,20 @@ renderUserAvatar = () => {
                 </g>
             </svg>
         </span>
-        <span className="sidebar-menu-text">Classroom</span>
+        <span className="sidebar-menu-text">Collaboration</span>
+    </Link>
+</li>
+
+<li  className={`sidebar-menu-item ${this.props.activeLink === 'assessments' ? 'active': ''} `}>
+    <Link to="/students/assessments" className="sidebar-menu-button">
+        <span className="sidebar-menu-icon sidebar-menu-icon--left">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="22" height="22">
+                <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
+                    <path d="M11.75,4.5C11.888,4.5,12,4.612,12,4.75V5c0,0.552,0.448,1,1,1s1-0.448,1-1V4.75c0-0.138,0.112-0.25,0.25-0.25h1 c0.138,0,0.25,0.112,0.25,0.25v4.7c0,0.135,0.11,0.245,0.246,0.244c0.018,0,0.036-0.002,0.054-0.006 c0.48-0.108,0.969-0.171,1.46-0.188c0.133-0.002,0.239-0.11,0.24-0.243V4.5c0-1.105-0.895-2-2-2h-1.25C14.112,2.5,14,2.388,14,2.25 V1c0-0.552-0.448-1-1-1s-1,0.448-1,1v1.25c0,0.138-0.112,0.25-0.25,0.25h-1.5C10.112,2.5,10,2.388,10,2.25V1c0-0.552-0.448-1-1-1 S8,0.448,8,1v1.25C8,2.388,7.888,2.5,7.75,2.5h-1.5C6.112,2.5,6,2.388,6,2.25V1c0-0.552-0.448-1-1-1S4,0.448,4,1v1.25 C4,2.388,3.888,2.5,3.75,2.5H2c-1.105,0-2,0.895-2,2v13c0,1.105,0.895,2,2,2h7.453c0.135,0,0.244-0.109,0.245-0.243 c0-0.019-0.002-0.038-0.007-0.057c-0.109-0.48-0.173-0.968-0.191-1.46c-0.002-0.133-0.11-0.239-0.243-0.24H2.25 C2.112,17.5,2,17.388,2,17.25V4.75C2,4.612,2.112,4.5,2.25,4.5h1.5C3.888,4.5,4,4.612,4,4.75V5c0,0.552,0.448,1,1,1s1-0.448,1-1 V4.75C6,4.612,6.112,4.5,6.25,4.5h1.5C7.888,4.5,8,4.612,8,4.75V5c0,0.552,0.448,1,1,1s1-0.448,1-1V4.75 c0-0.138,0.112-0.25,0.25-0.25H11.75z M17.5,11c-3.59,0-6.5,2.91-6.5,6.5s2.91,6.5,6.5,6.5s6.5-2.91,6.5-6.5 C23.996,13.912,21.088,11.004,17.5,11z M17.5,22.5c-0.552,0-1-0.448-1-1s0.448-1,1-1s1,0.448,1,1S18.052,22.5,17.5,22.5z M18.439,18.327c-0.118,0.037-0.196,0.15-0.189,0.273v0.15c0,0.414-0.336,0.75-0.75,0.75s-0.75-0.336-0.75-0.75V18.2 c0.003-0.588,0.413-1.096,0.988-1.222c0.607-0.131,0.993-0.73,0.862-1.338c-0.131-0.607-0.73-0.993-1.338-0.862 c-0.517,0.112-0.887,0.57-0.887,1.099c0,0.414-0.336,0.75-0.75,0.75s-0.75-0.336-0.75-0.75c0-1.45,1.176-2.625,2.626-2.624 c1.45,0,2.625,1.176,2.624,2.626c0,1.087-0.671,2.062-1.686,2.451V18.327z" stroke="none" fill="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+        </span>
+        <span className="sidebar-menu-text">Assessments</span>
     </Link>
 </li>
 
@@ -200,11 +213,12 @@ renderUserAvatar = () => {
                     <path d="M21.5,3h-2.75c-0.138,0-0.25-0.112-0.25-0.25V1c0-0.552-0.448-1-1-1s-1,0.448-1,1v4.75c0,0.414-0.336,0.75-0.75,0.75 S15,6.164,15,5.75V3.5C15,3.224,14.776,3,14.5,3H8.25C8.112,3,8.001,2.889,8,2.751V1c0-0.552-0.448-1-1-1S6,0.448,6,1v4.75 C6,6.164,5.664,6.5,5.25,6.5S4.5,6.164,4.5,5.75V3.5C4.5,3.224,4.276,3,4,3H2.5c-1.105,0-2,0.895-2,2v17c0,1.105,0.895,2,2,2h19 c1.105,0,2-0.895,2-2V5C23.5,3.895,22.605,3,21.5,3z M21.5,21.5c0,0.276-0.224,0.5-0.5,0.5H3c-0.276,0-0.5-0.224-0.5-0.5v-12 C2.5,9.224,2.724,9,3,9h18c0.276,0,0.5,0.224,0.5,0.5V21.5z M18.185,13.111l-6-2.383c-0.119-0.046-0.251-0.046-0.37,0l-6,2.383 c-0.193,0.077-0.319,0.266-0.315,0.474c0,0.034,0,3.38,0,3.38c0,0.414,0.336,0.75,0.75,0.75S7,17.379,7,16.965v-2.506l4.834,1.706 c0.107,0.038,0.225,0.038,0.332,0l6-2.118c0.26-0.092,0.397-0.377,0.305-0.638C18.423,13.273,18.319,13.164,18.185,13.111z M15.263,15.829L12,16.981l-3.263-1.152c-0.26-0.092-0.546,0.045-0.638,0.306c-0.019,0.053-0.028,0.11-0.028,0.166v2.145 c0,0.212,0.134,0.402,0.334,0.472l2.574,0.908c0.661,0.232,1.381,0.232,2.042,0l2.574-0.908c0.2-0.07,0.334-0.26,0.334-0.472V16.3 c0-0.276-0.223-0.5-0.5-0.5c-0.057,0-0.113,0.01-0.166,0.028L15.263,15.829z" stroke="none" fill="currentColor" strokeWidth="0" strokeLinecap="round" strokeLinejoin="round"></path>
                 </g>
             </svg>
+            
     </a>
 </li> */}
 
-<li className="sidebar-menu-item">
-    <Link className="sidebar-menu-button" to="#sign-up.html">
+<li className={`sidebar-menu-item ${this.props.activeLink === 'announcements' ? 'active': ''} `}>
+    <Link className="sidebar-menu-button" to="/app/annoucements">
         <span className="sidebar-menu-icon sidebar-menu-icon--left">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="25" height="25">
                 <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
@@ -212,13 +226,26 @@ renderUserAvatar = () => {
                 </g>
             </svg>
         </span>
-        <span className="sidebar-menu-text">Annoucements</span>
+        <span className="sidebar-menu-text">Notifications</span>
+    </Link>
+</li>
+
+<li className={`sidebar-menu-item ${this.props.activeLink === 'profile' ? 'active': ''} `}>
+    <Link className="sidebar-menu-button" to="/student/profile">
+        <span className="sidebar-menu-icon sidebar-menu-icon--left">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="25" height="25">
+                <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
+                    <path d="M21.5,3h-2.75c-0.138,0-0.25-0.112-0.25-0.25V1c0-0.552-0.448-1-1-1s-1,0.448-1,1v4.75c0,0.414-0.336,0.75-0.75,0.75 S15,6.164,15,5.75V3.5C15,3.224,14.776,3,14.5,3H8.25C8.112,3,8.001,2.889,8,2.751V1c0-0.552-0.448-1-1-1S6,0.448,6,1v4.75 C6,6.164,5.664,6.5,5.25,6.5S4.5,6.164,4.5,5.75V3.5C4.5,3.224,4.276,3,4,3H2.5c-1.105,0-2,0.895-2,2v17c0,1.105,0.895,2,2,2h19 c1.105,0,2-0.895,2-2V5C23.5,3.895,22.605,3,21.5,3z M21.5,21.5c0,0.276-0.224,0.5-0.5,0.5H3c-0.276,0-0.5-0.224-0.5-0.5v-12 C2.5,9.224,2.724,9,3,9h18c0.276,0,0.5,0.224,0.5,0.5V21.5z M18.185,13.111l-6-2.383c-0.119-0.046-0.251-0.046-0.37,0l-6,2.383 c-0.193,0.077-0.319,0.266-0.315,0.474c0,0.034,0,3.38,0,3.38c0,0.414,0.336,0.75,0.75,0.75S7,17.379,7,16.965v-2.506l4.834,1.706 c0.107,0.038,0.225,0.038,0.332,0l6-2.118c0.26-0.092,0.397-0.377,0.305-0.638C18.423,13.273,18.319,13.164,18.185,13.111z M15.263,15.829L12,16.981l-3.263-1.152c-0.26-0.092-0.546,0.045-0.638,0.306c-0.019,0.053-0.028,0.11-0.028,0.166v2.145 c0,0.212,0.134,0.402,0.334,0.472l2.574,0.908c0.661,0.232,1.381,0.232,2.042,0l2.574-0.908c0.2-0.07,0.334-0.26,0.334-0.472V16.3 c0-0.276-0.223-0.5-0.5-0.5c-0.057,0-0.113,0.01-0.166,0.028L15.263,15.829z" stroke="none" fill="currentColor" strokeWidth="0" strokeLinecap="round" strokeLinejoin="round"></path>
+                </g>
+            </svg>
+        </span>
+        <span className="sidebar-menu-text">Profile</span>
     </Link>
 </li>
 
 
 <li className="sidebar-menu-item">
-    <Link onClick={() => { auth().signOut()}} className="sidebar-menu-button" to="#sign-up.html">
+    <Link onClick={() => {this.logOut()}} className="sidebar-menu-button" to="#logout">
         <span className="sidebar-menu-icon sidebar-menu-icon--left">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="22" height="22">
                 <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">

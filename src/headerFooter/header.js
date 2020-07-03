@@ -5,11 +5,11 @@ import { auth } from "../database";
 class Header extends Component {
     renderUserName = () => {
         const user = JSON.parse(localStorage.getItem('easystudy-user'))
-        return user.fullName ? user.fullName : ''
+        return user && user.fullName ? user.fullName : ''
     }
     renderUserType = () => {
         const user = JSON.parse(localStorage.getItem('easystudy-user'))
-        return user.type ? user.type: this.logOut()
+        return user && user.type ? user.type: this.logOut()
     }
     logOut = () => {
         auth().signOut()
@@ -81,7 +81,7 @@ class Header extends Component {
 
                         <ul class="nav navbar-nav d-none d-md-flex">
                             <li class="nav-item dropdown">
-                                <a href="#notifications_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
+                                {/* <a href="#notifications_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
                                     <span class="nav-icon navbar-notifications-indicator">
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="25" height="25">
                                             <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
@@ -89,12 +89,12 @@ class Header extends Component {
                                             </g>
                                         </svg>
                                     </span>
-                                </a>
+                                </a> */}
                                 <div id="notifications_menu" class="dropdown-menu dropdown-menu-right navbar-notifications-menu">
-                                    <div class="dropdown-item d-flex align-items-center py-2">
+                                    {/* <div class="dropdown-item d-flex align-items-center py-2">
                                         <span class="flex navbar-notifications-menu__title m-0">Notifications</span>
                                         <a href="javascript:void(0)" class="text-muted"><small>Clear all</small></a>
-                                    </div>
+                                    </div> */}
                                     <div class="navbar-notifications-menu__content" data-perfect-scrollbar>
                                         <div class="py-2">
 
@@ -221,7 +221,7 @@ class Header extends Component {
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <Link to="/notifications" data-toggle="sidebar" class="nav-link d-flex align-items-center">
+                                <Link to="/app/annoucements" data-toggle="sidebar" class="nav-link d-flex align-items-center">
                                     <span class=" nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="25" height="25">
                                             <g transform="matrix(1.6666666666666667,0,0,1.6666666666666667,0,0)">
@@ -251,7 +251,7 @@ class Header extends Component {
                                 <div class="dropdown-item d-flex align-items-center py-2 navbar-company-info py-3">
 
                                     <span class="mr-3">
-                                        <img src="assets/images/frontted-logo-blue.svg" width="43" height="43" alt="avatar" />
+                                        <img src={process.env.PUBLIC_URL + "assets/images/frontted-logo-blue.svg"} width="43" height="43" alt="avatar" />
                                     </span>
                                     <span class="flex d-flex flex-column">
                                     <strong class="h5 m-0">{this.renderUserName()}</strong>
@@ -260,13 +260,16 @@ class Header extends Component {
 
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <Link class="dropdown-item d-flex align-items-center py-2" to="/user/account">
-                                    <span class="material-icons mr-2">account_circle</span> Edit Account
+                                <Link class="dropdown-item d-flex align-items-center py-2" to="/student/profile">
+                                    <span class="material-icons mr-2">account_circle</span> Profile
                                 </Link>
-                                <Link class="dropdown-item d-flex align-items-center py-2" to="#">
+                                {/* <Link class="dropdown-item d-flex align-items-center py-2" to="#">
                                     <span class="material-icons mr-2">settings</span> Settings
-                                </Link>
-                                <Link class="dropdown-item d-flex align-items-center py-2" to="/register">
+                                </Link> */}
+                                <Link class="dropdown-item d-flex align-items-center py-2" onClick={() => {
+                                    this.logOut()
+
+                                }} to="/register">
                                     <span class="material-icons mr-2">exit_to_app</span> Logout
                                 </Link>
                             </div>

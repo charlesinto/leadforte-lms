@@ -20,7 +20,7 @@ class Home extends Component {
         <div className="mdk-drawer-layout__content page">
 <div className="home-banner text-white mb-4">
     <div className="container-fluid page__container">
-        <h1 className="display-4 bold" data-aos="fade-up" data-aos-duration="800">Reader are the Leaders of Tomorrow</h1>
+        <h1 className="display-4 bold" data-aos="fade-up" data-aos-duration="800">Readers are the Leaders of Tomorrow</h1>
         <p className="lead mb-5" data-aos="fade-up" data-aos-duration="1000">Your future awaits you</p>
         <div data-aos="fade-down" data-aos-duration="400" data-aos-delay="400" data-offset="-100">
             <Link to="#" className="btn btn-light btn-lg mr-1" href="student-courses.html">Browse Lessons</Link>

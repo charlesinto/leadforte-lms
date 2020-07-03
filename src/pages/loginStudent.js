@@ -1,7 +1,70 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-
+import swal from "sweetalert2";
+import { auth, db } from "../database";
+import * as actions from '../redux/actions'
+import { connect } from 'react-redux';
 class LoginStudent extends Component {
+    state = {
+        email: '',
+        phoneNumber: ''
+    }
+    loginUser = async (e) => {
+        try{
+            e.preventDefault()
+            this.props.initiateLoading(true)
+            const {email, phoneNumber} = this.state;
+            if(email.trim() === '' || phoneNumber.trim === ''){
+                this.props.initiateLoading(false)
+                return swal.fire('Email Address and Phone number is required')
+            }
+
+            const user = await auth().signInWithEmailAndPassword(email, phoneNumber);
+            const uid = user.user.uid;
+
+            const docs = await db.collection(`users`).where('uid', '==', uid).get()
+
+            if(docs.empty){
+                this.props.initiateLoading(false)
+                return swal.fire('Some errors were encountered signing you in, please contact your admin')
+            }
+
+            
+            const schoolPin = docs.docs[0].data()['schoolCode'];
+            const docs2 = await db.doc(`/partners/${schoolPin}`).get();
+            const appDomain = docs2.data()['appDomain'];
+
+            localStorage.setItem('appDomain', appDomain);
+            localStorage.setItem('schoolCode', schoolPin);
+            localStorage.setItem('easystudy-user', JSON.stringify({
+                schoolCode: schoolPin,
+                email,
+                fullName: docs.docs[0].data()['firstName'] + ' ' + docs.docs[0].data()['lastName'] ,
+                phoneNumber,
+                type: 'student',
+                uid,
+                admissionNumber: docs.docs[0].data()['admissionNumber']
+            }))
+            this.props.initiateLoading(false)
+            this.props.history.push('/')
+        }catch(error){
+            this.props.initiateLoading(false)
+            console.error(error);
+            if(error.code === 'auth/user-not-found'){
+                return swal.fire('There is no user record found')
+            }
+            if(error.code === 'auth/wrong-password'){
+                return swal.fire('The password is invalid or the user does not have a password')
+            }
+            swal.fire('some errors were encountered, please contact admin')
+        }
+    }
+    handleOnChange = (e) => {
+        const {target: {name, value}} = e;
+        this.setState({
+            [name]: value
+        })
+    }
   render() {
     return (
       <div className="container layout-login-centered-boxed"> 
@@ -48,7 +111,7 @@ class LoginStudent extends Component {
                 <form  noValidate>
                    
                     
-                <div className="form-group">
+                {/* <div className="form-group">
                                 <label className="text-label" htmlFor="schoolPin">School Activation Pin</label>
                                 <div className="input-group input-group-merge">
                                     <input id="schoolPin" type="text" required className="form-control form-control-prepended" placeholder="101010" />
@@ -58,13 +121,13 @@ class LoginStudent extends Component {
                                         </div>
                                     </div>
                                 </div>
-                </div>
+                </div> */}
                     
                     
                     <div className="form-group">
                         <label className="text-label" htmlFor="email">Email Address:</label>
                         <div className="input-group input-group-merge">
-                            <input id="email" type="email" required="" className="form-control form-control-prepended" placeholder="john@doe.com" />
+                            <input id="email" type="email" name="email" onChange={this.handleOnChange} value={this.state.email} required="" className="form-control form-control-prepended" placeholder="john@doe.com" />
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
                                     <span className="far fa-envelope"></span>
@@ -75,7 +138,7 @@ class LoginStudent extends Component {
                     <div className="form-group">
                         <label className="text-label" htmlFor="phoneNumber">Phone Number:</label>
                         <div className="input-group input-group-merge">
-                            <input id="phoneNumber" type="text" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
+                            <input id="phoneNumber" name="phoneNumber" onChange={this.handleOnChange} value={this.state.phoneNumber} type="text" required="" className="form-control form-control-prepended" placeholder="Enter your password" />
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
                                     <span className="fas fa-phone-square-alt"></span>
@@ -84,7 +147,7 @@ class LoginStudent extends Component {
                         </div>
                     </div>
                     <div className="form-group mb-1">
-                        <button className="btn btn-block btn-primary" type="submit">Login</button>
+                        <button onClick={this.loginUser} className="btn btn-block btn-primary" type="submit">Login</button>
                     </div>
                     {/* <div className="form-group text-center">
                         <div className="custom-control custom-checkbox">
@@ -104,4 +167,4 @@ class LoginStudent extends Component {
   }
 }
 
-export default LoginStudent;
+export default connect(null, actions)(LoginStudent);

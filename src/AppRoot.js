@@ -34,13 +34,13 @@ class AppRoot extends Component {
     }
     auth().onAuthStateChanged(user => {
       if(user){
-        this.setState({
-          authenticated: true
-        })
+        // this.setState({
+        //   authenticated: true
+        // })
       }else{
-        this.setState({
-          authenticated: false
-        })
+        // this.setState({
+        //   authenticated: false
+        // })
       }
     })
   }

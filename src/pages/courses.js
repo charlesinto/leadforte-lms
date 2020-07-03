@@ -373,6 +373,12 @@ class StudentCourses extends Component {
       this.props.initiateLoading(false)
     }
   }
+  static getDerivedStateFromProps(nextProps, state){
+    if(nextProps.category !== state.courses){
+      return {...state, courses: nextProps.category}
+    }
+    return null
+  }
   handleOnChange = (e) => {
     const {target: {name, value}} = e;
     this.setState({
@@ -406,7 +412,7 @@ class StudentCourses extends Component {
               <div className="container-fluid page__heading-container">
                           <div className="page__heading d-flex align-items-center justify-content-between">
                               <h1 className="m-0">Subjects</h1>
-                              {/* <Link to="#" className="btn btn-success ml-3">Go to Courses <i className="material-icons">arrow_forward</i></Link> */}
+                              <Link to="#" onClick={() => {this.props.history.goBack();}} className="btn btn-success ml-3">Go to Classes <i className="material-icons">arrow_forward</i></Link>
                           </div>
                       </div>
                 <hr />
@@ -422,7 +428,7 @@ class StudentCourses extends Component {
                                 <div className="form-inline  mb-3 ml-auto">
                                     <div className="form-group mr-3">
                                         <label for="custom-select" className="form-label mr-1">Category</label>
-                                        <select value={this.state.courses} name="courses" onChange={this.handleOnChange} id="custom-select" className="form-control custom-select" style={{width:200}} >
+                                        <select disabled value={this.state.courses} name="courses" onChange={this.handleOnChange} id="custom-select" className="form-control custom-select" style={{width:200}} >
                                             {/* <option selected>All categories</option> */}
                                             <option value="1">Primary School</option>
                                             <option value="2">Junior Secondary School</option>
@@ -447,4 +453,9 @@ class StudentCourses extends Component {
   }
 }
 
-export default connect(null, actions)(StudentCourses);
+const mapStateToProps = state => {
+  const {UI: {category}} = state;
+  return {category}
+}
+
+export default connect(mapStateToProps, actions)(StudentCourses);

@@ -60,7 +60,7 @@ class StudentDashboard extends Component{
                                 <div className="card-subtitle text-muted">Recent Courses</div>
                             </div>
                             <div className="ml-auto">
-                                <Link to="student-courses.html" className="btn btn-light">Browse All</Link>
+                                <Link to="#student-courses.html" className="btn btn-light">Browse All</Link>
                             </div>
                         </div>
 
