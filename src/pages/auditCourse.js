@@ -122,27 +122,27 @@ class AuditCourse extends Component {
       case 'pdf':
         console.log('val pdf')
         this.props.initiateLoading(true)
-        setTimeout(() => {
-          this.props.initiateLoading(false)
-        }, 15000)
       return ( <object data={material.file_url} type="application/pdf">
-          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+          <iframe class="embed-responsive-item" onLoad={() => {
+            this.props.initiateLoading(false)
+            console.log('iframe loaded')
+          }}  title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'doc':
         this.props.initiateLoading(true)
-        setTimeout(() => {
-          this.props.initiateLoading(false)
-        }, 15000)
       return ( <object data={material.file_url}>
-          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+          <iframe class="embed-responsive-item" onLoad={() => {
+            this.props.initiateLoading(false)
+            console.log('iframe loaded')
+          }}  title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'ppt':
         this.props.initiateLoading(true)
-        setTimeout(() => {
-          this.props.initiateLoading(false)
-        }, 15000)
       return ( <object data={material.file_url} >
-          <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
+          <iframe  class="embed-responsive-item" onLoad={() => {
+            this.props.initiateLoading(false)
+            console.log('iframe loaded')
+          }}  title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
       case 'audio':
         return (<div>
