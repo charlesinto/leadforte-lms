@@ -9,44 +9,49 @@ import ReactPlayer from 'react-player'
 import Material from '../components/materials';
 
 class AuditCourse extends Component {
-  state = {
-    materials: [
-        {
-          "id": "1",
-          "file_name": "Parts of Speech",
-          "file_url": "http://www.umyu.easystudy.com.ng/materials/pdf/pdffile236.pdf",
-          "file_type": "pdf",
-          "subject": "English Language",
-          "subject_id": "1"
-        },
-        {
-          "id": "232",
-          "file_name": "Simultaneous Equation",
-          "file_url": "http://www.digitalschool.easystudy.com.ng/teacher/dashboard/materials/pdf/pdffile1.pdf",
-          "file_type": "pdf",
-          "subject": "English Language",
-          "subject_id": "1"
-        },
-        {
-          "id": "242",
-          "file_name": "damola",
-          "file_url": "http://www.cbccollege.easystudy.com.ng/admin/dashboard/materials/video/videofile1.mp4",
-          "file_type": "video",
-          "subject": "English Language",
-          "subject_id": "1"
-        },
-        {
-          "id": "243",
-          "file_name": "damola",
-          "file_url": "http://www.cbccollege.easystudy.com.ng/admin/dashboard/materials/video/videofile1.mp4",
-          "file_type": "video",
-          "subject": "English Language",
-          "subject_id": "1"
-        },
-        
-      ],
-    courses: '1',
-    material: {}
+  constructor(props){
+    super(props)
+    this.state = {
+      materials: [
+          {
+            "id": "1",
+            "file_name": "Parts of Speech",
+            "file_url": "http://www.umyu.easystudy.com.ng/materials/pdf/pdffile236.pdf",
+            "file_type": "pdf",
+            "subject": "English Language",
+            "subject_id": "1"
+          },
+          {
+            "id": "232",
+            "file_name": "Simultaneous Equation",
+            "file_url": "http://www.digitalschool.easystudy.com.ng/teacher/dashboard/materials/pdf/pdffile1.pdf",
+            "file_type": "pdf",
+            "subject": "English Language",
+            "subject_id": "1"
+          },
+          {
+            "id": "242",
+            "file_name": "damola",
+            "file_url": "http://www.cbccollege.easystudy.com.ng/admin/dashboard/materials/video/videofile1.mp4",
+            "file_type": "video",
+            "subject": "English Language",
+            "subject_id": "1"
+          },
+          {
+            "id": "243",
+            "file_name": "damola",
+            "file_url": "http://www.cbccollege.easystudy.com.ng/admin/dashboard/materials/video/videofile1.mp4",
+            "file_type": "video",
+            "subject": "English Language",
+            "subject_id": "1"
+          },
+          
+        ],
+      courses: '1',
+      material: {}
+    }
+    this.videoRef = React.createRef()
+    this.audioRef = React.createRef()
   }
   async componentDidMount(){
     try{
@@ -92,6 +97,20 @@ class AuditCourse extends Component {
       }
     })
   }
+  componentDidUpdate(prevProps, prevState, snapshot){
+    if(this.state.material.file_type === 'video'){
+      if(this.videoRef){
+        this.videoRef.src = this.state.material.file_url
+        this.videoRef.load()
+        console.log('updated')
+      }
+    }
+    if(this.state.material.file_type === 'audio'){
+      this.audioRef.src = this.state.material.file_url;
+      this.audioRef.load()
+      console.log('updated')
+    }
+  }
   selectedMaterial = material => {
       console.log(material)
       this.setState({
@@ -125,25 +144,38 @@ class AuditCourse extends Component {
       return ( <object data={material.file_url} >
           <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="Book" allowFullScreen src={`https://docs.google.com/viewer?url=${material.file_url}&embedded=true`}></iframe>
       </object>)
-      case 'video':
-        this.props.initiateLoading(true)
-        setTimeout(() => {
-          this.props.initiateLoading(false)
-        }, 15000)
-        return ( <object data={material.file_url}>
-        <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="vidoe" allowFullScreen src={material.file_url}></iframe>
-    </object>)
       case 'audio':
-        this.props.initiateLoading(true)
-        setTimeout(() => {
-          this.props.initiateLoading(false)
-        }, 150000)
-      return ( <object data={material.file_url}>
-      <iframe class="embed-responsive-item" onLoad={() => this.props.initiateLoading(false)} title="audo" allowFullScreen src={material.file_url}></iframe>
-  </object>)
-      default:
+        return (<div>
+            <div className="embed-responsive-item d-flex justify-content-center align-items-center">
+            <audio ref={(ref) => this.audioRef = ref} controls>
+          <source src={material.file_url} type="audio/mpeg" />
+        Your browser does not support the audio element.
+        </audio>
+            </div>
+        </div>)
+      case 'video':
+        // this.props.initiateLoading(true)
+        // setTimeout(() => {
+        //   this.props.initiateLoading(false)
+        // }, 15000)
         return (
-          <iframe title="video" class="embed-responsive-item" src={"https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"} allowfullscreen></iframe>
+          <video ref={(ref) => this.videoRef = ref} id="videoplayer" onLoad={() => {
+            // this.props.initiateLoading(false)
+            console.log('iframe loaded')
+          }}  width="320" height="240" controls>
+          <source src={material.file_url} type="video/mp4" />
+          {/* <source src="movie.ogg" type="video/ogg" /> */}
+        Your browser does not support the video tag.
+        </video>)
+        
+      default:
+        this.props.initiateLoading(true)
+        return (
+          <iframe title="video" class="embed-responsive-item"
+          onLoad={() => {
+            this.props.initiateLoading(false)
+            console.log('iframe loaded')
+          }} src={"https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"} allowfullscreen></iframe>
         )
     }
   }
@@ -259,3 +291,8 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, actions)(AuditCourse);
+
+{/* return (  <ReactPlayer onReady={() => {
+          this.props.initiateLoading(false)
+          console.log('iframe loaded', material.file_url)
+        }} controls playing={true} light url={material.file_url} />) */}

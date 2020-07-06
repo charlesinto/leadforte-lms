@@ -9,7 +9,17 @@ class Material extends Component {
             return <span style={{color: 'red'}}><i className="fas fa-file-pdf"></i></span>
             case 'video':
                 
-            return <span style={{color: 'red'}}><i className="fas fa-video"></i></span> 
+            return <span style={{color: 'red'}}><i className="fas fa-video"></i></span>
+
+            case 'audio':
+
+                return <span style={{color: 'red'}}><i class="far fa-file-audio"></i></span>
+
+            case 'ppt':
+                return <span style={{color: 'red'}}><i class="fas fa-file-powerpoint"></i></span>
+            case 'doc':
+                return <span style={{color: 'red'}}><i class="far fa-file-word"></i></span>
+
             default:
                 return <span style={{color: 'red'}}><i className="fas fa-volume-off"></i></span> 
              
