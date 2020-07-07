@@ -24,7 +24,7 @@ import TeacherClasses from "./pages/teacherClasses";
 import TeacherChatroom from "./pages/teacherChatroom";
 import TeacherAnnouncement from "./pages/teacherAnnouncement";
 import TeacherAssessment from "./pages/teacherViewAnnoucements";
-
+import TeacherVideoCall from './pages/teacherVideoCall'
 // import AdminRoute from "./components/AdminRoute";
 // import DashBoard from './hoc/Dashboard';
 // import Layout from './hoc/layout';
@@ -114,6 +114,13 @@ class Root extends Component {
             path="/app/annoucements"
             component={Announcements}
             authenticated={this.props.isAuthenticated}
+        />
+        <ProtectedRoute
+          exact
+          component={TeacherVideoCall}
+          path="/instructor/create-call"
+          authenticated={this.props.isAuthenticated}
+
         />
         <AuthRoute
           exact

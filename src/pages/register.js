@@ -28,7 +28,7 @@ class Login extends Component {
              }
             //verify school pin
             this.props.initiateLoading(true)
-            const users = await db.collection(`users`).where('admissionNumber', '==', admissionNumber).get();
+            const users = await db.collection(`users`).where('admissionNumber', '==', admissionNumber).where('admissionNumber', '==', schoolPin).get();
             if(!users.empty){
                 this.props.initiateLoading(false)
                 return swal.fire('User account exists please proceed to login')

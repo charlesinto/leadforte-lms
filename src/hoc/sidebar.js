@@ -292,6 +292,14 @@ renderUserAvatar = () => {
                                     <span className="sidebar-menu-text">Annoucements</span>
                                 </Link>
                             </li>
+                            <li className={`sidebar-menu-item ${this.props.activeLink === 'videocall' ? 'active': ''} `}>
+                                <Link className="sidebar-menu-button" to="/instructor/create-call">
+                                    <span className="sidebar-menu-icon sidebar-menu-icon--left">
+                                        <i class="fas fa-video"></i>
+                                    </span>
+                                    <span className="sidebar-menu-text">Video Call</span>
+                                </Link>
+                            </li>
                             <li className={`sidebar-menu-item ${this.props.activeLink === 'assessments' ? 'active': ''} `}>
                                 <Link className="sidebar-menu-button" to="/instructor/view-assessments">
                                     <span className="sidebar-menu-icon sidebar-menu-icon--left">

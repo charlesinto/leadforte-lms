@@ -219,6 +219,7 @@ activity-desc1 {
   bottom: 60px;
   right: 20px;
   z-index: 90;
+  cursor: pointer;
 }
 
 .fab-container{
@@ -246,4 +247,16 @@ activity-desc1 {
   background-color: #EEEEEE;
   padding: 16px 20px;
   width: 100%
+}
+
+.icon{
+  font-size: 10rem;
+  color: #ff0000;
+  margin-left: 3rem;
+}
+
+.jitsi-container-wrapper > :first-child {
+  width: 100vw !important;
+  max-width: 100% !important;
+  height: calc(100vh - 3rem) !important;
 }
