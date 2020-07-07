@@ -236,7 +236,7 @@ renderUserAvatar = () => {
 </li>
 
 
-<li className="sidebar-menu-item">
+<li className="sidebar-menu-item" onClick={() => {this.logOut()}}>
     <Link onClick={() => {this.logOut()}} className="sidebar-menu-button" to="#logout">
         <span className="sidebar-menu-icon sidebar-menu-icon--left">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="22" height="22">
@@ -422,7 +422,7 @@ renderUserAvatar = () => {
                             </a>
                         </li> */}
 
-                    <li className="sidebar-menu-item">
+                    <li className="sidebar-menu-item" onClick={() => {this.logOut()}}>
                         <Link onClick={() => {this.logOut()}} className="sidebar-menu-button" to="#logout">
                             <span className="sidebar-menu-icon sidebar-menu-icon--left">
                                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" width="22" height="22">
