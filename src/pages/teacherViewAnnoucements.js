@@ -28,8 +28,8 @@ class TeacherAssessment extends Component{
         const schoolCode = JSON.parse(localStorage.getItem('easystudy-user'))['schoolCode']
         
         doc.docs[0].data().classes.forEach(item => {
-            
-            db.collection('assessments').where('schoolCode', '==', schoolCode).where('studentClass', '==', item.class).onSnapshot(quiz => {
+            const classLower = item.class.toLowerCase()
+            db.collection('assessments').where('schoolCode', '==', schoolCode).where('studentClass', '==', classLower).onSnapshot(quiz => {
                 const assesments = []
                 
                 quiz.forEach((doc) => {

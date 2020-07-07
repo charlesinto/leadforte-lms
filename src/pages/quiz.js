@@ -61,6 +61,7 @@ class Quiz extends Component{
                     const admissionNumber = JSON.parse(localStorage.getItem('easystudy-user'))['admissionNumber']; 
                     const userClassDoc = await db.collection('students').where('schoolCode', '==', schoolCode).where('admissionNumber', '==', admissionNumber).get()
                     const userClass = userClassDoc.docs[0].data()['class'];
+                    const classLower = userClass.toLowerCase()
 
                     this.state.response.forEach(item => {
                         if(item.userAnswer === item.question.correctionOption){
@@ -86,7 +87,7 @@ class Quiz extends Component{
                         completedAt,
                         studentUserId,
                         studentFullName: fullName,
-                        studentClass: userClass,
+                        studentClass: classLower,
                         quizName: this.props.assessment.quizName,
                         subject: this.props.assessment.subject,
                         validUntil: this.props.assessment.validUntil,
@@ -123,8 +124,9 @@ class Quiz extends Component{
                 if(!docs.empty){
                     const userClass = docs.docs[0].data()['class']
                     console.log(userClass)
+                    const classLower = userClass.toLowerCase()
                     db.collection('assessments').where('schoolCode', '==', schoolCode)
-                    .where('studentClass', '==', userClass).onSnapshot(this.onDocmentSnapshot)
+                    .where('studentClass', '==', classLower).onSnapshot(this.onDocmentSnapshot)
                 }
             })
     }
@@ -233,6 +235,9 @@ class Quiz extends Component{
                                 <div className="col-md-6">
                                         {
                                             this.props.assessment.questions[this.state.currentIndex].options.map((option, i) => {
+                                                if((option.option && option.option.trim() === '') || (option.answer && option.answer.trim() === '')){
+                                                    return null
+                                                }
                                                 if(this.isOptionSelected(option)){
                                                     return <Choice isOptionSelected={true} key={i} selectedChoice={this.onChoiceSelected} option={option.option} answer={option.answer} />
                                                 }
